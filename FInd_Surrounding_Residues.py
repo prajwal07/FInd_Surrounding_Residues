@@ -21,11 +21,10 @@ import argparse
 
 #os.chdir("/hits/fast/mcm/nandekpl/mustafa_shared/")
 
-PATH = os.getcwd()
-print 'Current working directory is', PATH
+
+parser = argparse.ArgumentParser(description='Counts the % Occurance of protein/lipid residues within a specified cutoff distance from a ligand/residue. "Command:" "python FInd_Surrounding_Residues.py -i traj_at.gro -t traj_at.xtc -fa "resname POPC" -fin "protein" -d 5 -step 10 -o occupancy.dat" ')
 
 
-parser = argparse.ArgumentParser(description='Counts the % Occurance of protein/lipid residues within a specified cutoff distance from a ligand/residue.')
 parser.add_argument('-i', '--input1', dest = "grofile", help='Input File name of gro file (Example: docked_ami_100ns_nowater.gro).')
 parser.add_argument('-t', '--input2', dest = "trajfile", help='Input File name of gromacs trajectory file (Example: docked_ami_100ns_nowater.xtc).')
 parser.add_argument('-fa', '--input3', dest = "find_around", help='Mention the selection of atoms around which you want to find residues. Specfy the selections in double quoates (" ") (Example: "resname UNK" or "protein" or "resid 458").')
@@ -38,6 +37,8 @@ parser.add_argument('-o', '--output1', dest = "fout", help='Name of OUTPUT DATA 
 
 args = parser.parse_args()
 
+PATH = os.getcwd()
+print 'Current working directory is', PATH
 
 def occurance_count(grofile, xtcfile, find_around, find_in, distcutoff, step=10):
     """Counts the occurance of protein residues within a specified cutoff from a ligand
@@ -47,8 +48,9 @@ def occurance_count(grofile, xtcfile, find_around, find_in, distcutoff, step=10)
             *xtcfile*
                 trajectory file
                 
-            *ligand_name*
-                string of the ligand name
+            *find around*
+                string of the selection atoms around which you want to find residues. Specfy the selections in double quoates (" ")
+
             *Selection to find in*
                 string of the selelction name
 
